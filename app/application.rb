@@ -11,11 +11,10 @@ class Application
       @@items.each do |item|
         resp.write "#{item}\n"
       end
-    else req.path.match(/search/)
+    elsif req.path.match(/search/)
       search_term = req.params["q"]
       resp.write handle_search(search_term)
-    end
-    if req.path.match(/cart/)
+    elsif req.path.match(/cart/)
       @@cart.each do |items|
         resp.write "#{items}\n"
       end
