@@ -2,7 +2,7 @@ class Application
 
   @@items = ["Apples","Carrots","Pears"]
   @@cart = []
-  
+
   def call(env)
     resp = Rack::Response.new
     req = Rack::Request.new(env)
@@ -18,6 +18,17 @@ class Application
       @@cart.each do |items|
         resp.write "#{items}\n"
       end
+    elsif req.path.match(/add/)
+
+      item = req.params["item"]
+
+      if @@items.include?(item)
+        resp.write "#{item} has been added to your cart."
+        @@cart << item
+      else
+        resp.write ""
+      end
+
     else
       resp.write "Path Not Found"
     end
